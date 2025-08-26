@@ -6,10 +6,11 @@ namespace Tests\Domain\User;
 
 use App\Domain\User\User;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class UserTest extends TestCase
 {
-    public function userProvider(): array
+    public static function userProvider(): array
     {
         return [
             [1, 'bill.gates', 'Bill', 'Gates'],
@@ -21,12 +22,12 @@ class UserTest extends TestCase
     }
 
     /**
-     * @dataProvider userProvider
      * @param int    $id
      * @param string $username
      * @param string $firstName
      * @param string $lastName
      */
+    #[DataProvider('userProvider')]
     public function testGetters(int $id, string $username, string $firstName, string $lastName)
     {
         $user = new User($id, $username, $firstName, $lastName);
@@ -38,12 +39,12 @@ class UserTest extends TestCase
     }
 
     /**
-     * @dataProvider userProvider
      * @param int    $id
      * @param string $username
      * @param string $firstName
      * @param string $lastName
      */
+    #[DataProvider('userProvider')]
     public function testJsonSerialize(int $id, string $username, string $firstName, string $lastName)
     {
         $user = new User($id, $username, $firstName, $lastName);
