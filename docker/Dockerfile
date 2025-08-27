@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y sqlite3 \
     && sqlite3 /var/www/db/wordy.db < schema.sql \
     && rm -rf /var/lib/apt/lists/*
 
+RUN chown -R www-data:www-data /var/www/db
+
 # Copy in our own VirtualHost config
 COPY vhost.conf /etc/apache2/sites-available/000-default.conf
 
