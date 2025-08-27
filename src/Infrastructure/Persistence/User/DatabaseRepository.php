@@ -22,13 +22,28 @@ abstract class DatabaseRepository implements RepositoryInterface
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    abstract public function getById(int $id): array;
+    public function getById(int $id): array
+    {
+        $pdo = $this->database->getConnection();
+        $stmt = $pdo->prepare("SELECT * FROM {$this->getTableName()} WHERE id = ?");
+        $stmt->execute([$id]);
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ?: [];
+    }
 
     abstract public function create(array $data): int;
 
     abstract public function update(int $id, array $data): int;
 
-    abstract public function delete(int $id): int;
+    public function delete(int $id): int
+    {
+        $pdo = $this->database->getConnection();
+        $stmt = $pdo->prepare("DELETE FROM {$this->getTableName()} WHERE id = ?");
+        $stmt->execute([$id]);
+
+        return $stmt->rowCount();
+    }
 
     abstract public function getTableName(): string;
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Application\Actions\Api\CreateLearningUnitAction;
 use App\Application\Actions\Api\CreateSentenceAction;
 use App\Application\Actions\Api\ListLearningUnitsAction;
-use App\Application\Actions\Api\ListSentenceAction;
+use App\Application\Actions\Api\ListSentencesAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -32,7 +32,7 @@ return function (App $app) {
     $app->group('/api/v1', function (Group $group) {
         $group->get('/learning-units', ListLearningUnitsAction::class);
         $group->post('/learning-units', CreateLearningUnitAction::class);
-        $group->get('/vocabulary', ListSentenceAction::class);
+        $group->get('/vocabulary', ListSentencesAction::class);
         $group->post('/vocabulary', CreateSentenceAction::class);
     });
 };

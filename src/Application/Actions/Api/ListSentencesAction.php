@@ -8,19 +8,27 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
 use Valitron\Validator;
 
-class ListSentenceAction extends BaseAction
+class ListSentencesAction extends BaseAction
 {
+    private SentenceRepository $sentencesRepo;
+
     public function __construct(
         LoggerInterface $logger,
         SentenceRepository $repository,
         Validator $validator
     ) {
         parent::__construct($logger, $repository, $validator);
+        $this->sentencesRepo = $repository;
     }
 
     protected function action(): Response
     {
-        $sentences = $this->repository->getAll();
+        $params = $this->request->getQueryParams();
+        if (isset($params['sl']) && isset($params['tl'])) {
+            $sentences = $this->sentencesRepo->getByLanguages($params['sl'], $params['tl'], $params['lu'] ?? null);
+        } else {
+            $sentences = $this->repository->getAll();
+        }
 
         $this->logger->info("Sentences list was viewed.");
 

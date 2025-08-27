@@ -14,16 +14,6 @@ class SentenceRepository extends DatabaseRepository
         return 'sentences';
     }
 
-    public function getById(int $id): array
-    {
-        $pdo = $this->database->getConnection();
-        $stmt = $pdo->prepare("SELECT * FROM {$this->getTableName()} WHERE id = ?");
-        $stmt->execute([$id]);
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result ?: [];
-    }
-
     public function create(array $data): int
     {
         $pdo = $this->database->getConnection();
@@ -71,49 +61,28 @@ class SentenceRepository extends DatabaseRepository
         return $stmt->rowCount();
     }
 
-    public function delete(int $id): int
-    {
-        $pdo = $this->database->getConnection();
-        $stmt = $pdo->prepare("DELETE FROM {$this->getTableName()} WHERE id = ?");
-        $stmt->execute([$id]);
-
-        return $stmt->rowCount();
-    }
-
-    /**
-     * Get sentences by learning unit ID
-     */
-    public function getByLearningUnitId(int $learningUnitId): array
-    {
-        $pdo = $this->database->getConnection();
-        $stmt = $pdo->prepare("SELECT * FROM {$this->getTableName()} WHERE learning_unit_id = ?");
-        $stmt->execute([$learningUnitId]);
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
     /**
      * Get sentences by source and target language IDs
      */
-    public function getByLanguages(int $sourceLanguageId, int $targetLanguageId): array
+    public function getByLanguages(int $sourceLanguageId, int $targetLanguageId, ?int $learningUnit = null): array
     {
         $pdo = $this->database->getConnection();
-        $stmt = $pdo->prepare("
+        $query = "
             SELECT * FROM {$this->getTableName()} 
-            WHERE source_language_id = ? AND target_language_id = ?
-        ");
-        $stmt->execute([$sourceLanguageId, $targetLanguageId]);
+            WHERE source_language_id = :sl AND target_language_id = :tl
+        ";
+        if ($learningUnit > 0) {
+            $query .= " AND learning_unit_id = :lu";
+        }
+        $stmt = $pdo->prepare($query);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+        $stmt->bindParam(":sl", $sourceLanguageId, PDO::PARAM_INT);
+        $stmt->bindParam(":tl", $targetLanguageId, PDO::PARAM_INT);
+        if ($learningUnit > 0) {
+            $stmt->bindParam(":lu", $learningUnit, PDO::PARAM_INT);
+        }
 
-    /**
-     * Get learning sentences (is_learning = true)
-     */
-    public function getLearningSentences(): array
-    {
-        $pdo = $this->database->getConnection();
-        $stmt = $pdo->query("SELECT * FROM {$this->getTableName()} WHERE is_learning = 1");
+        $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
