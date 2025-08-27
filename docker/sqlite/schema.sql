@@ -6,7 +6,7 @@ CREATE TABLE languages
     language TEXT NOT NULL
 );
 
-CREATE TABLE expressions (
+CREATE TABLE sentences (
     id INTEGER PRIMARY KEY,
     source_language_id INTEGER NOT NULL,
     target_language_id INTEGER NOT NULL,
