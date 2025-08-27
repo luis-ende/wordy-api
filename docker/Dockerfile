@@ -15,3 +15,10 @@ RUN apt-get update && apt-get install -y sqlite3 \
 
 # Copy in our own VirtualHost config
 COPY vhost.conf /etc/apache2/sites-available/000-default.conf
+
+# Install Xdebug via PECL
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+# Copy a custom Xdebug configuration
+COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini

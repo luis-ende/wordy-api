@@ -1,9 +1,10 @@
 PRAGMA foreign_keys = ON;
 
-CREATE TABLE languages () {
-    id INTEGER PRIMARY KEY,
-    language TEXT NOT NULL,
-}
+CREATE TABLE languages
+(
+    id       INTEGER PRIMARY KEY,
+    language TEXT NOT NULL
+);
 
 CREATE TABLE expressions (
     id INTEGER PRIMARY KEY,
@@ -29,9 +30,12 @@ CREATE TABLE expressions (
 CREATE TABLE learning_units (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL
-)
+);
 
-INSERT INTO languages VALUES(1, 'English'),
-VALUES(2, 'Spanish'),
-VALUES(3, 'German'),
-VALUES(4, 'French');
+INSERT INTO learning_units VALUES (1, 'Unit 1'), (2, 'Unit 2');
+
+INSERT INTO languages
+VALUES (1, 'English'),
+       (2, 'Spanish'),
+       (3, 'German'),
+       (4, 'French');
