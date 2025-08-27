@@ -38,4 +38,5 @@ INSERT INTO languages
 VALUES (1, 'English'),
        (2, 'Spanish'),
        (3, 'German'),
-       (4, 'French');
+       (4, 'French'),
+       (5, 'Japanese');
