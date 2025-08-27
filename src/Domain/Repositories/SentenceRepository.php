@@ -11,7 +11,7 @@ class SentenceRepository extends DatabaseRepository
 {
     public function getTableName(): string
     {
-        return 'expressions';
+        return 'sentences';
     }
 
     public function getById(int $id): array

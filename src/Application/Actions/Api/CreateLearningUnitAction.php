@@ -13,9 +13,10 @@ class CreateLearningUnitAction extends BaseAction
     public function __construct(
         LoggerInterface $logger,
         LearningUnitsRepository $repository,
-        private Validator $validator
+        Validator $validator
     ) {
-        parent::__construct($logger, $repository);
+        parent::__construct($logger, $repository, $validator);
+
         $this->validator->mapFieldsRules([
             'name' => ['required',  ['lengthMax', 120]],
         ]);
@@ -25,15 +26,10 @@ class CreateLearningUnitAction extends BaseAction
     protected function action(): Response
     {
         $body = $this->request->getParsedBody();
-        $this->validator = $this->validator->withData($body);
-        if (! $this->validator->validate()) {
-            $this->response
-                ->getBody()
-                ->write(json_encode([$this->validator->errors()]));
-
-            return $this->response->withStatus(422);
+        $response = $this->validate($body);
+        if ($response instanceof Response) {
+            return $response;
         }
-
 
         $id = $this->repository->create($body);
 

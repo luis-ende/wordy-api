@@ -6,14 +6,16 @@ use App\Application\Actions\BaseAction;
 use App\Domain\Repositories\LearningUnitsRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
+use Valitron\Validator;
 
-class ListLearninUnitsAction extends BaseAction
+class ListLearningUnitsAction extends BaseAction
 {
     public function __construct(
         LoggerInterface $logger,
-        LearningUnitsRepository $repository
+        LearningUnitsRepository $repository,
+        Validator $validator
     ) {
-        parent::__construct($logger, $repository);
+        parent::__construct($logger, $repository, $validator);
     }
 
     protected function action(): Response
