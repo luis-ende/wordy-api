@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use App\Application\Settings\SettingsInterface;
+use App\Domain\Repositories\RepositoryInterface;
+use App\Infrastructure\Persistence\Database;
+use App\Infrastructure\Persistence\User\DatabaseRepository;
 use DI\ContainerBuilder;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -12,6 +15,9 @@ use Psr\Log\LoggerInterface;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
+        Database::class => function () {
+            return new Database($_ENV['DB_PATH']);
+        },
         LoggerInterface::class => function (ContainerInterface $c) {
             $settings = $c->get(SettingsInterface::class);
 
