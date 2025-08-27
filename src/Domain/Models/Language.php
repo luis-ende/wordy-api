@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Domain;
+namespace App\Domain\Models;
 
 use JsonSerializable;
 
-class LearningUnit implements JsonSerializable
+class Language implements JsonSerializable
 {
     public function __construct(
         private ?int $id,
-        private string $name
+        private string $language
     ) {
     }
 
@@ -19,9 +19,9 @@ class LearningUnit implements JsonSerializable
         return $this->id;
     }
 
-    public function getName(): string
+    public function getLanguage(): string
     {
-        return $this->name;
+        return $this->language;
     }
 
     public function setId(?int $id): void
@@ -29,9 +29,9 @@ class LearningUnit implements JsonSerializable
         $this->id = $id;
     }
 
-    public function setName(string $name): void
+    public function setLanguage(string $language): void
     {
-        $this->name = $name;
+        $this->language = $language;
     }
 
     #[\ReturnTypeWillChange]
@@ -39,7 +39,7 @@ class LearningUnit implements JsonSerializable
     {
         return [
             'id' => $this->getId(),
-            'name' => $this->getName(),
+            'language' => $this->getLanguage(),
         ];
     }
 }

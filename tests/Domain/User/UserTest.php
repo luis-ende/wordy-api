@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Domain\User;
 
-use App\Domain\User\User;
-use Tests\TestCase;
+use App\Domain\Models\User\User;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\TestCase;
 
 class UserTest extends TestCase
 {
