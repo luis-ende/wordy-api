@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\User;
 
-use App\Domain\Repositories\RepositoryInterface;
 use App\Infrastructure\Persistence\Database;
 use PDO;
 
 abstract class DatabaseRepository implements RepositoryInterface
 {
     public function __construct(
-        private Database $database
+        protected Database $database
     ) {
     }
 
@@ -25,7 +24,7 @@ abstract class DatabaseRepository implements RepositoryInterface
 
     abstract public function getById(int $id): array;
 
-    abstract public function create(array $data): void;
+    abstract public function create(array $data): int;
 
     abstract public function update(int $id, array $data): int;
 

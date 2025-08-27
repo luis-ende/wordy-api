@@ -9,8 +9,10 @@ use Psr\Log\LoggerInterface;
 
 class ListLearninUnitsAction extends BaseAction
 {
-    public function __construct(LoggerInterface $logger, LearningUnitsRepository $repository)
-    {
+    public function __construct(
+        LoggerInterface $logger,
+        LearningUnitsRepository $repository
+    ) {
         parent::__construct($logger, $repository);
     }
 
@@ -18,7 +20,7 @@ class ListLearninUnitsAction extends BaseAction
     {
         $units = $this->repository->getAll();
 
-        $this->logger->info("Users list was viewed.");
+        $this->logger->info("Learning Units list was viewed.");
 
         return $this->respondWithData($units);
     }

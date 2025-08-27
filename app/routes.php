@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Application\Actions\Api\CreateLearningUnitAction;
 use App\Application\Actions\Api\ListLearninUnitsAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
@@ -28,5 +29,6 @@ return function (App $app) {
 
     $app->group('/api/v1', function (Group $group) {
         $group->get('/learning-units', ListLearninUnitsAction::class);
+        $group->post('/learning-units', CreateLearningUnitAction::class);
     });
 };

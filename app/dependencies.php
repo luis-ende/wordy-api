@@ -3,9 +3,7 @@
 declare(strict_types=1);
 
 use App\Application\Settings\SettingsInterface;
-use App\Domain\Repositories\RepositoryInterface;
 use App\Infrastructure\Persistence\Database;
-use App\Infrastructure\Persistence\User\DatabaseRepository;
 use DI\ContainerBuilder;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
